@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Practice</title>
     <style>
+         html{
+                font-size: 62.5%;
+            }
         *{
             box-sizing: border-box;
         }
@@ -169,6 +172,7 @@
 
         #id_closeMenu{
             display: none;
+            font-size: 1.5rem;
         }
         #id_openMenu{
             display: none;
@@ -198,6 +202,7 @@
 
             #id_closeMenu{
                 display: inline-block;
+                font-size: 2rem;
             }
 
             #id_openMenu{
@@ -232,7 +237,7 @@
 
         <!-- side menu -->
         <nav class="box chat-list menu " id="id_menu">
-            <button id="id_closeMenu" class="menubtn" style="float: right;font-size: 1.5rem;" onclick="closeMenu()">&#10006</button>
+            <button id="id_closeMenu" class="menubtn" style="float: right;" onclick="closeMenu()">&#10006</button>
             <br style="clear:both ;">
             <ul style="padding-left: 0;">
                 {% for conversation in conversations %}
@@ -248,15 +253,18 @@
 
         <!--  main content -->
         <main class="box chat-box scrollbar-hidden">
-            <p style="float: left;">Conversation between : <span class="blue info" >&#128129 {{names.0.name}} </span> &nbsp; and <span class="green info"> &#128102 {{names.1.name}} </span></p>
+           
             <button id="id_openMenu" class="menubtn" style="float: right;" onclick="showMenu()"> 
+                
                 <svg viewBox="0 0 100 80" width="25" height="25">
                     <rect width="100" height="20"></rect>
                     <rect y="30" width="100" height="20"></rect>
                     <rect y="60" width="100" height="20"></rect>
                   </svg>
-            </button>
+                </button>
             <span style="clear: both;"></span>
+            <p style="float: left;line-height: 2rem;">Between : <span class="blue info" >&#128129 {{names.0.name}} </span> &nbsp; and <span class="green info"> &#128102 {{names.1.name}} </span></p>
+                
             {% for chat in chats %}
                 {% if names.0.name == chat.name %}
                     <div class="left chat" style="position:relative ;">
@@ -347,6 +355,7 @@
         var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
         var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
         
+        
         var recognition ;
         function testSpeech(input,id) {
             // check internet connection
@@ -383,7 +392,7 @@
                 var speechResult = event.results[0][0].transcript.toLowerCase();
                 answerBtn = document.getElementById('answer_'+id)
                 answerBtn.style.display = 'inline-block'
-
+                console.log(speechResult)
 
                 if(speechResult === phrase) {
                     resultPara = 'Very Good, You said it correctly!';
@@ -482,6 +491,16 @@
             menu = document.getElementById('id_menu')
             menu.style.display = 'none'
             menu.style.width = '0px'
+        }
+
+        function getLocalStream() {
+            navigator.mediaDevices.getUserMedia({video: false, audio: true}).then((stream) => {
+                window.localStream = stream; // A
+                window.localAudio.srcObject = stream; // B
+                window.localAudio.autoplay = true; // C
+            }).catch((err) => {
+                console.error(`you got an error: ${err}`)
+            });
         }
     </script>
 </body>
