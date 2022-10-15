@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        .container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 97vh;
+        }
+  
+        .chat-list{
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgb(74, 11, 116);
+            background-color: rgb(235, 235, 235);
+            border-radius: 10px;
+            color: white;
+            padding:10px;
+            font-weight: bold;
+            height: 97vh;
+            width:25%;
+            
+        }
+        .chat-box{
+            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+            width:70%;
+            padding: 10px;
+            margin-left: 10px;
+            border: 1px solid black;
+            border-radius: 10px;
+            overflow: auto;
+            background-color: rgb(230, 230, 230);
+            height: 97vh;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+       
+        .chat{
+            border: none;
+            clear: both;
+            max-width: 400px;
+            margin-top: 20px;
+        }
+        .chat p {
+            padding: 10px 20px;
+            padding-right: 60px;
+            font-size: 1.5rem;
+            margin: 5px 5px;
+        }
+        .left{
+            float: left;
+        }
+        
+        .right{
+            float: right;
+            cursor: pointer;
+        }
+        
+        
+        .blue{
+            background-color: rgb(20, 34, 141);
+            color: rgb(255, 255, 255);
+            border: 2px solid rgb(20, 34, 141); 
+        }
+        .green{
+            background-color: #1e9781;
+            color: #e6fff5;
+            border: 2px solid #1e9781;
+        }
+
+        .info{
+            padding: 2px 5px;
+            border-radius: 10px;
+        }
+
+        /* side list style */
+        .menu-item ul{
+            list-style-type: none;
+            list-style-type: symbols();
+        }
+        .menu ul a li{
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            list-style-type: none;
+            padding: 15px 10px;
+            border-radius: 10px;
+            background-color: rgb(255, 255, 255);
+            margin-top: 10px;
+            color: black;
+
+        }
+
+        .menu ul a{
+            text-decoration: none;
+            color: black;
+        }
+        .menu ul a li:hover{
+            background-color: rgb(151, 151, 226);
+            color: white;
+        }
+
+        /* .badge{
+            padding: 8px 8px;
+            background-color: rgb(255, 165, 165);
+            color: rgb(226, 19, 19);
+            border: 2px solid rgb(255, 0, 0);
+            border-radius: 15px;
+            margin-left: 20px;
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            cursor: pointer;
+        } */
+
+        .badge-blue{
+            background-color: rgb(244, 247, 255);
+            color: rgb(20, 34, 141);
+            border: 2px solid rgb(20, 34, 141);
+        }
+
+        .badge-green{
+            color: #1e9781;
+            background-color: #e6fff5;
+            border: 2px solid #1e9781;
+        }
+        .badge{
+            padding: 8px 8px;
+            border-radius: 15px;
+            margin-left: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .badge-blue:hover{
+            background-color: rgb(20, 34, 141);
+            color: rgb(255, 255, 255);
+            border: 2px solid rgb(20, 34, 141); 
+        }
+
+        .badge-green:hover{
+            background-color: #1e9781;
+            color: #000000;
+            border: 2px solid #1e9781;
+        }
+        .badge-correct{
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #13660b;;
+            /* background-color: #0bed5a;
+            border: 2px solid #0bed5a; */
+        }
+        .badge-wrong{
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: rgb(255, 0, 0);
+            /* background-color: rgb(226, 19, 19);
+            border: 2px solid rgb(255, 0, 0); */
+        }
+        .character{
+            position: absolute;
+            left: 10px;
+            top: 10px;
+        }
+
+        #id_closeMenu{
+            display: none;
+        }
+        #id_openMenu{
+            display: none;
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .scrollbar-hidden::-webkit-scrollbar {
+        display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .scrollbar-hidden {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+        }
+
+        @media only screen and (max-width: 600px) {
+            body{
+                margin: 0;
+                padding: 0;
+            }
+
+            .container{
+                margin: 0;
+                height: 100vh;
+            }
+
+            #id_closeMenu{
+                display: inline-block;
+            }
+
+            #id_openMenu{
+                display:inline-block;
+            }
+            .chat-box {
+                width: 100%;
+                margin-left: 0;
+                height: 100vh;
+                border-radius: 0;
+
+            }
+            .chat-list {
+                display: none;
+                height: 100vh;
+                border-radius: 0;
+                z-index: 1000;
+            }
+
+            .menubtn{
+                background-color: rgb(211, 211, 211);
+                border: none;
+                padding-top: 5px;
+                border-radius: 15px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <section class='container'>
+
+        <!-- side menu -->
+        <nav class="box chat-list menu " id="id_menu">
+            <button id="id_closeMenu" class="menubtn" style="float: right;font-size: 1.5rem;" onclick="closeMenu()">&#10006</button>
+            <br style="clear:both ;">
+            <ul style="padding-left: 0;">
+                {% for conversation in conversations %}
+                
+                <a href="{% url 'newPractice' conversation.id %}" >
+                    <li>
+                        &#128101 {{conversation.title}}
+                    </li>
+                </a>
+                {% endfor %}
+            </ul>
+        </nav>
+
+        <!--  main content -->
+        <main class="box chat-box scrollbar-hidden">
+            <p style="float: left;">Conversation between : <span class="blue info" >&#128129 {{names.0.name}} </span> &nbsp; and <span class="green info"> &#128102 {{names.1.name}} </span></p>
+            <button id="id_openMenu" class="menubtn" style="float: right;" onclick="showMenu()"> 
+                <svg viewBox="0 0 100 80" width="25" height="25">
+                    <rect width="100" height="20"></rect>
+                    <rect y="30" width="100" height="20"></rect>
+                    <rect y="60" width="100" height="20"></rect>
+                  </svg>
+            </button>
+            <span style="clear: both;"></span>
+            {% for chat in chats %}
+                {% if names.0.name == chat.name %}
+                    <div class="left chat" style="position:relative ;">
+                        <span style="font-size: 1.8rem;">&#128129</span>
+                        <p 
+                            id = 'text_{{chat.id}}'
+                            class="mychat blue" 
+                            style="border-radius: 15px 0px  15px 0px;"
+                            onclick="testSpeech(event)"
+                        >
+                            {{chat.sentence}}
+                        </p>
+                        {% if chat.voice_record  %}
+                        <audio id="id_{{chat.id}}">
+                            <source src="{{ chat.voice_record.url }}">
+                        </audio>
+                        <button 
+                            class="badge badge-blue"
+                            onclick = "document.getElementById('id_{{chat.id}}').play()"
+                        >Play</button>
+                        <button 
+                            id="play_{{chat.id}}"
+                            class="badge badge-blue"
+                            onclick = "play('{{chat.id}}')"
+                        >Speak</button>
+                        <button 
+                            id="stop_{{chat.id}}"
+                            class="badge badge-blue"
+                            onclick="stopBtn('{{chat.id}}',event)"
+                            style="display: none;"
+                        >Stop</button>
+                        <span 
+                            id="answer_{{chat.id}}"
+                            class="badge"
+                            style="display: none;"
+                        ></span>
+                            
+                        
+                        {% endif %}
+                    </div>
+                {% else %}
+                <div class="right chat" style="position:relative ;">
+                    <span style="font-size: 1.8rem;"> &#128102</span>
+
+                    <p 
+                        id="text_{{chat.id}}"
+                        class="mychat green" 
+                        style="border-radius:  0px  15px 0px 15px;"
+                        onclick="testSpeech(event)"
+                    >
+                        {{chat.sentence}}
+                    </p>
+                    {% if chat.voice_record  %}
+                    <audio id="id_{{chat.id}}">
+                        <source src="{{ chat.voice_record.url }}">
+                    </audio>
+                    <button 
+                    class="badge badge-green"
+                        onclick = "document.getElementById('id_{{chat.id}}').play()"
+                    >Play</button>
+                    <button 
+                        id="play_{{chat.id}}"
+                        class="badge badge-green"
+                        onclick = "play('{{chat.id}}')"
+                    >Speak</button>
+                    <button 
+                        id="stop_{{chat.id}}"
+                        class="badge badge-green"
+                        onclick="stopBtn('{{chat.id}}',event)"
+                        style="display: none;"
+                    >Stop</button>
+                    <span 
+                        id="answer_{{chat.id}}"
+                        class="badge"
+                        style="display: none;"
+                    ></span>
+                   
+                    {% endif %}
+                </div>
+
+                {% endif %}
+            {% endfor %}
+            </main>
+        
+    </section>
+    <script>
+        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+        var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+        var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
+        
+        var recognition ;
+        function testSpeech(input,id) {
+            // check internet connection
+            var ifConnected = window.navigator.onLine;
+            if (! ifConnected) {
+                alert('Connection not available');
+                return
+            }
+            // To ensure case consistency while checking with the returned output text
+            phrase = input.innerText.toLowerCase();
+            phrase = phrase.replace(/[.,\/#!?$%\^&\*;:{}=\-_`~()]/g,"");
+            // input.insertAdjacentHTML("afterend", node);
+            resultPara = ""
+            // phrasePara.textContent = phrase;
+            // resultPara.textContent = 'Right or wrong?';
+            // resultPara.style.background = 'rgba(0,0,0,0.2)';
+            // diagnosticPara.textContent = '...diagnostic messages';
+            
+            var grammar = '#JSGF V1.0; grammar phrase; public <phrase> = ' + phrase +';';
+            recognition = new SpeechRecognition();
+            var speechRecognitionList = new SpeechGrammarList();
+            speechRecognitionList.addFromString(grammar, 1);
+            recognition.continuous = true;
+            recognition.grammars = speechRecognitionList;
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.start();
+
+
+            recognition.onresult = function(event) {
+
+                var speechResult = event.results[0][0].transcript.toLowerCase();
+                answerBtn = document.getElementById('answer_'+id)
+                answerBtn.style.display = 'inline-block'
+
+
+                if(speechResult === phrase) {
+                    resultPara = 'Very Good, You said it correctly!';
+                    answerBtn.classList.remove('badge-wrong')
+                    answerBtn.classList.add('badge-correct')
+                    answerBtn.innerHTML= '&#128525 Correct';
+        
+                } else {
+                    resultPara= 'That didn\'t sound right.';
+                    answerBtn.classList.remove('badge-correct')
+                    answerBtn.classList.add('badge-wrong')
+                    answerBtn.innerHTML= '&#128578 Try Again' 
+                }
+               
+                console.log('Confidence: ' + event.results[0][0].confidence);
+            }
+
+            
+            
+            recognition.onspeechend = function() {
+                recognition.stop();
+                console.log(recognition)
+                // testBtn.disabled = false;
+                // testBtn.textContent = 'Start new test';
+            }
+
+
+
+            // recognition.onerror = function(event) {
+            //     testBtn.disabled = false;
+            //     testBtn.textContent = 'Start new test';
+            //     diagnosticPara.textContent = 'Error occurred in recognition: ' + event.error;
+            // }
+            
+            recognition.onaudiostart = function(event) {
+                //Fired when the user agent has started to capture audio.
+                console.log('SpeechRecognition.onaudiostart');
+            }
+            
+            recognition.onaudioend = function(event) {
+                //Fired when the user agent has finished capturing audio.
+                console.log('SpeechRecognition.onaudioend');
+            }
+            
+            recognition.onend = function(event) {
+                //Fired when the speech recognition service has disconnected.
+                console.log('SpeechRecognition.onend');
+            }
+            
+            recognition.onnomatch = function(event) {
+                //Fired when the speech recognition service returns a final result with no significant recognition. This may involve some degree of recognition, which doesn't meet or exceed the confidence threshold.
+                console.log('SpeechRecognition.onnomatch');
+            }
+            
+            recognition.onsoundstart = function(event) {
+                //Fired when any sound — recognisable speech or not — has been detected.
+                console.log('SpeechRecognition.onsoundstart');
+            }
+            
+            recognition.onsoundend = function(event) {
+                //Fired when any sound — recognisable speech or not — has stopped being detected.
+                console.log('SpeechRecognition.onsoundend');
+            }
+            
+            recognition.onspeechstart = function (event) {
+                //Fired when sound that is recognised by the speech recognition service as speech has been detected.
+                console.log('SpeechRecognition.onspeechstart');
+            }
+            recognition.onstart = function(event) {
+                //Fired when the speech recognition service has begun listening to incoming audio with intent to recognize grammars associated with the current SpeechRecognition.
+                console.log('SpeechRecognition.onstart');
+            }
+        }
+
+        myChat = document.getElementsByClassName('mychat')
+        
+        function stopBtn(id){
+            recognition.stop()
+            document.getElementById('stop_'+id).style.display = 'none'
+            document.getElementById('play_'+id).style.display = 'inline-block'
+        }
+
+        function play(id) {
+            testSpeech(document.getElementById('text_'+id),id)
+            document.getElementById('play_'+id).style.display = 'none'
+            document.getElementById('stop_'+id).style.display = 'inline-block'
+        }
+
+        function showMenu() {
+            menu = document.getElementById('id_menu')
+            menu.style.position = 'fixed'
+            menu.style.display = 'block'
+            menu.style.width = '100%'
+        }
+        function closeMenu() {
+            menu = document.getElementById('id_menu')
+            menu.style.display = 'none'
+            menu.style.width = '0px'
+        }
+    </script>
+</body>
+</html>
