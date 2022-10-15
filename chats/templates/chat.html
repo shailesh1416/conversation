@@ -1,0 +1,96 @@
+{% extends 'practice.html' %}
+{% block content %}
+<main class="box chat-box scrollbar-hidden">
+    <p style="float: left;">Conversation between : <span class="blue info" >&#128129 {{names.0.name}} </span> &nbsp; and <span class="green info"> &#128102 {{names.1.name}} </span></p>
+    <button id="id_openMenu" class="menubtn" style="float: right;" onclick="showMenu()"> 
+        <svg viewBox="0 0 100 80" width="25" height="25">
+            <rect width="100" height="20"></rect>
+            <rect y="30" width="100" height="20"></rect>
+            <rect y="60" width="100" height="20"></rect>
+          </svg>
+    </button>
+    <span style="clear: both;"></span>
+    {% for chat in chats %}
+        {% if names.0.name == chat.name %}
+            <div class="left chat" style="position:relative ;">
+                <span style="font-size: 1.8rem;">&#128129</span>
+                <p 
+                    id = 'text_{{chat.id}}'
+                    class="mychat blue" 
+                    style="border-radius: 15px 0px  15px 0px;"
+                    onclick="testSpeech(event)"
+                >
+                    {{chat.sentence}}
+                </p>
+                {% if chat.voice_record  %}
+                <audio id="id_{{chat.id}}">
+                    <source src="{{ chat.voice_record.url }}">
+                </audio>
+                <button 
+                    class="badge badge-blue"
+                    onclick = "document.getElementById('id_{{chat.id}}').play()"
+                >Play</button>
+                <button 
+                    id="play_{{chat.id}}"
+                    class="badge badge-blue"
+                    onclick = "play('{{chat.id}}')"
+                >Speak</button>
+                <button 
+                    id="stop_{{chat.id}}"
+                    class="badge badge-blue"
+                    onclick="stopBtn('{{chat.id}}',event)"
+                    style="display: none;"
+                >Stop</button>
+                <span 
+                    id="answer_{{chat.id}}"
+                    class="badge"
+                    style="display: none;"
+                ></span>
+                    
+                
+                {% endif %}
+            </div>
+        {% else %}
+        <div class="right chat" style="position:relative ;">
+            <span style="font-size: 1.8rem;"> &#128102</span>
+
+            <p 
+                id="text_{{chat.id}}"
+                class="mychat green" 
+                style="border-radius:  0px  15px 0px 15px;"
+                onclick="testSpeech(event)"
+            >
+                {{chat.sentence}}
+            </p>
+            {% if chat.voice_record  %}
+            <audio id="id_{{chat.id}}">
+                <source src="{{ chat.voice_record.url }}">
+            </audio>
+            <button 
+            class="badge badge-green"
+                onclick = "document.getElementById('id_{{chat.id}}').play()"
+            >Play</button>
+            <button 
+                id="play_{{chat.id}}"
+                class="badge badge-green"
+                onclick = "play('{{chat.id}}')"
+            >Speak</button>
+            <button 
+                id="stop_{{chat.id}}"
+                class="badge badge-green"
+                onclick="stopBtn('{{chat.id}}',event)"
+                style="display: none;"
+            >Stop</button>
+            <span 
+                id="answer_{{chat.id}}"
+                class="badge"
+                style="display: none;"
+            ></span>
+           
+            {% endif %}
+        </div>
+
+        {% endif %}
+    {% endfor %}
+    </main>
+    {% endblock  %}

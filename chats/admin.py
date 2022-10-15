@@ -8,7 +8,7 @@ class ConversationAdmin(admin.ModelAdmin):
 
 
 class ChatsAdmin(admin.ModelAdmin):
-    list_display = ['name', 'sentence']
+    list_display = ['name', 'sentence','sentence_no']
     list_filter = ['conversation']
 
 
